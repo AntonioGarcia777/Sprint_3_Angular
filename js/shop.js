@@ -106,31 +106,19 @@ function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart,
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
 
-    let count = 1;
-    cartList.forEach(function (product) {
-    var found = false;
-
-    cart.forEach(function (item) {
-      if (item.id === product.id) {
-        item.quantity = ++count;
-        item.subtotal = item.price * item.quantity;
-        found = true;        
-      }
-    });
-    if (!found) {
-      cart.push({
-        id: product.id,
-        name: product.name,        
-        price: product.price,
-        type: product.type,
-        quantity: 1,
-        subtotal: product.subtotal,
-        subtotalWithDiscount: 0
-      });
-    }
-    });
-    console.log("generateCart=> ", cart);
-
+    for(i= 0; i <cartList.length; i++){
+        let cartItem = cart.indexOf(cartList[i]); 
+    
+        if(cartItem === -1){ 
+            cart.push(cartList[i]); 
+            cart[cart.length -1].quantity = 1; 
+            cart[cart.length -1].subtotal = cartList[i].price;
+        }   else    {
+            cart[cartItem].quantity++;
+            cart[cartItem].subtotal += cartList[i].price;
+        }        
+    }    
+    console.log(cart);    
 }
 
 
